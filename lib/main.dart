@@ -28,6 +28,7 @@ class _HomeState extends State<Home> {
   TextEditingController _textController;
   List<int> items = [];
   List<int> sortedItems = [];
+  int time = 100;
 
   @override
   void initState() {
@@ -131,12 +132,28 @@ class _HomeState extends State<Home> {
                       items[i + 1] = items[i];
                       i = i - 1;
                       items[i + 1] = key;
-                      await Future.delayed(const Duration(milliseconds: 25),
-                          () => setState(() {}));
+                      await Future.delayed(
+                          Duration(milliseconds: time), () => setState(() {}));
                     }
                   }
                 },
-              )
+              ),
+              Column(
+                children: [
+                  Slider(
+                    label: 'Sorting Speed: ' + time.toString(),
+                    min: 1,
+                    max: 1000,
+                    value: time.toDouble(),
+                    onChanged: (double value) {
+                      setState(() {
+                        time = value.toInt();
+                      });
+                    },
+                  ),
+                  Text('Sorting Speed: ' + time.toString() + 'ms'),
+                ],
+              ),
             ],
           )
         ],
